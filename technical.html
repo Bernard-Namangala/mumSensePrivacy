@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MumSense - Technical Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #FAFAFA;
+      color: #1A1A1A;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+      color: #fff;
+      padding: 60px 24px 48px;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .header h1 span { color: #6659ED; }
+    .header .subtitle {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+    }
+    .header .badge {
+      display: inline-block;
+      margin-top: 20px;
+      background: rgba(102,89,237,0.15);
+      border: 1px solid rgba(102,89,237,0.3);
+      border-radius: 24px;
+      padding: 6px 18px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #A59BF7;
+    }
+
+    /* Container */
+    .container {
+      max-width: 800px;
+      margin: -24px auto 60px;
+      padding: 0 20px;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+      padding: 36px 32px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card h2 .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      margin: 24px 0 10px;
+    }
+    .card h3:first-of-type { margin-top: 8px; }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 14px;
+    }
+    .card p:last-child { margin-bottom: 0; }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 16px;
+    }
+    .card ul li {
+      font-size: 0.92rem;
+      color: #444;
+      padding: 7px 0 7px 24px;
+      position: relative;
+      border-bottom: 1px solid #F0F0F0;
+    }
+    .card ul li:last-child { border-bottom: none; }
+    .card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .purple-list li::before { background: #6659ED; }
+    .pink-list li::before { background: #F05FB3; }
+    .green-list li::before { background: #10B981; }
+    .blue-list li::before { background: #3B82F6; }
+    .amber-list li::before { background: #F59E0B; }
+
+    .card strong { color: #1A1A1A; font-weight: 600; }
+
+    /* Code blocks */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      background: #F3F2FD;
+      color: #6659ED;
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+    pre {
+      background: #1E1E2E;
+      color: #CDD6F4;
+      border-radius: 12px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 12px 0 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+    pre .comment { color: #6C7086; }
+    pre .keyword { color: #CBA6F7; }
+    pre .string { color: #A6E3A1; }
+    pre .type { color: #89B4FA; }
+    pre .fn { color: #F9E2AF; }
+
+    /* Architecture diagram (ASCII-style) */
+    .arch-box {
+      background: #F9F9FB;
+      border: 1.5px solid #E8E8EE;
+      border-radius: 14px;
+      padding: 24px;
+      margin: 16px 0;
+    }
+
+    /* Tech stack grid */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0 4px;
+    }
+    .stack-item {
+      background: #F9F9F9;
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .stack-item .stack-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #999;
+      margin-bottom: 6px;
+    }
+    .stack-item .stack-value {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #1A1A1A;
+    }
+    .stack-item .stack-detail {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* Flow diagram */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 16px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .flow-step {
+      background: #F7F6FE;
+      border: 1.5px solid #E0DDFA;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #6659ED;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .flow-arrow {
+      font-size: 1.2rem;
+      color: #CCC;
+      padding: 0 6px;
+    }
+
+    /* RevenueCat highlight card */
+    .rc-card {
+      background: linear-gradient(135deg, #F7F6FE 0%, #FDF2F8 100%);
+      border: 1.5px solid #E0DDFA;
+      border-radius: 14px;
+      padding: 24px;
+      margin: 16px 0;
+    }
+    .rc-card h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #6659ED;
+      margin-bottom: 8px;
+    }
+    .rc-card p {
+      font-size: 0.88rem;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.88rem;
+    }
+    .data-table th {
+      text-align: left;
+      font-weight: 700;
+      color: #1A1A1A;
+      padding: 10px 12px;
+      border-bottom: 2px solid #E8E8E8;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #F0F0F0;
+      color: #444;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .tag-free { background: #ECFDF5; color: #10B981; }
+    .tag-pro { background: #F7F6FE; color: #6659ED; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      font-size: 0.8rem;
+      color: #999;
+    }
+    .footer a { color: #6659ED; text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.8rem; }
+      .card { padding: 24px 20px; }
+      .stack-grid { grid-template-columns: 1fr; }
+      .flow { gap: 4px; }
+      .flow-step { font-size: 0.7rem; padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Mum<span>Sense</span></h1>
+    <div class="subtitle">Technical Documentation</div>
+    <div class="badge">Tech Stack &bull; Architecture &bull; RevenueCat</div>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+
+    <!-- Architecture Overview -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(102,89,237,0.1);">&#128736;</span>
+        Architecture Overview
+      </h2>
+      <p>
+        MumSense is a full-stack mobile application with a <strong>React Native</strong> client, a <strong>NestJS</strong> backend API, <strong>PostgreSQL</strong> database hosted on <strong>Supabase</strong>, and <strong>OpenAI GPT</strong> powering six distinct AI features. Subscriptions are managed entirely through <strong>RevenueCat</strong>.
+      </p>
+
+      <div class="arch-box">
+<pre style="background:transparent;color:#444;padding:0;margin:0;font-size:0.78rem;">
+<span class="comment">┌─────────────────────────────────────────────────────────┐</span>
+<span class="comment">│</span>  <strong>Mobile App</strong> (React Native / Expo)                       <span class="comment">│</span>
+<span class="comment">│</span>  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌────────────┐ <span class="comment">│</span>
+<span class="comment">│</span>  │  Screens  │ │ Contexts │ │  Hooks   │ │ RevenueCat │ <span class="comment">│</span>
+<span class="comment">│</span>  └────┬─────┘ └────┬─────┘ └────┬─────┘ └─────┬──────┘ <span class="comment">│</span>
+<span class="comment">└───────┼────────────┼────────────┼─────────────┼────────┘</span>
+        │            │            │             │
+        ▼            ▼            ▼             ▼
+<span class="comment">┌───────────────────────────────────┐   ┌──────────────┐</span>
+<span class="comment">│</span>  <strong>NestJS Backend API</strong>               <span class="comment">│   │</span> <strong>RevenueCat</strong>   <span class="comment">│</span>
+<span class="comment">│</span>  REST + WebSocket (Socket.IO)     <span class="comment">│   │</span> Cloud Service <span class="comment">│</span>
+<span class="comment">│</span>  ┌────────┐ ┌────────┐ ┌───────┐<span class="comment">│   │</span> Entitlements <span class="comment">│</span>
+<span class="comment">│</span>  │  Auth  │ │  AI    │ │ CRON  │<span class="comment">│   │</span> Offerings    <span class="comment">│</span>
+<span class="comment">│</span>  │ Better │ │ OpenAI │ │ Jobs  │<span class="comment">│   │</span> Purchases    <span class="comment">│</span>
+<span class="comment">│</span>  └────────┘ └────────┘ └───────┘<span class="comment">│   └──────────────┘</span>
+<span class="comment">└───────────────┬───────────────────┘</span>
+                │
+                ▼
+<span class="comment">┌───────────────────────────────────┐</span>
+<span class="comment">│</span>  <strong>PostgreSQL</strong> (Supabase)             <span class="comment">│</span>
+<span class="comment">│</span>  Prisma ORM + PrismaPg Adapter    <span class="comment">│</span>
+<span class="comment">└───────────────────────────────────┘</span>
+</pre>
+      </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(59,130,246,0.1);">&#9881;</span>
+        Tech Stack
+      </h2>
+
+      <div class="stack-grid">
+        <div class="stack-item">
+          <div class="stack-label">Mobile Framework</div>
+          <div class="stack-value">React Native 0.81 + Expo SDK 54</div>
+          <div class="stack-detail">TypeScript, React 19, NativeWind (Tailwind), React Navigation</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-label">Backend Framework</div>
+          <div class="stack-value">NestJS 11</div>
+          <div class="stack-detail">TypeScript, REST API, WebSocket (Socket.IO), scheduled CRON jobs</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-label">Database</div>
+          <div class="stack-value">PostgreSQL (Supabase)</div>
+          <div class="stack-detail">Prisma 7 ORM with PrismaPg adapter, connection pooling via PgBouncer</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-label">Authentication</div>
+          <div class="stack-value">Better Auth 1.4</div>
+          <div class="stack-detail">Email/password + social login (Google, Apple), session-based auth with Expo adapter</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-label">AI / LLM</div>
+          <div class="stack-value">OpenAI GPT + AI SDK 6</div>
+          <div class="stack-detail">Receipt OCR, insights generation, budget coaching, investment coaching, price comparison, daily lesson generation</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-label">AI Orchestration</div>
+          <div class="stack-value">Mastra 1.1</div>
+          <div class="stack-detail">Agent framework with memory, evaluation, and knowledge base for the budget and investment AI coaches</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-label">Subscriptions</div>
+          <div class="stack-value">RevenueCat SDK 9.7</div>
+          <div class="stack-detail">react-native-purchases for iOS/Android, entitlement-based gating, offering management</div>
+        </div>
+        <div class="stack-item">
+          <div class="stack-label">Notifications</div>
+          <div class="stack-value">Expo Notifications</div>
+          <div class="stack-detail">Push notifications for deals, insights, bulk buys, and community activity</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RevenueCat Implementation -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(240,95,179,0.1);">&#128179;</span>
+        RevenueCat Implementation
+      </h2>
+      <p>
+        RevenueCat is the <strong>sole subscription and payment infrastructure</strong> for MumSense. It manages product configuration, purchase processing, entitlement checking, and receipt validation for both iOS and Android.
+      </p>
+
+      <h3>SDK Integration</h3>
+      <p>
+        The mobile app uses <code>react-native-purchases v9.7.6</code> via a custom <code>RevenueCatService</code> singleton class that wraps the SDK:
+      </p>
+      <pre><span class="keyword">class</span> <span class="type">RevenueCatService</span> {
+  <span class="keyword">async</span> <span class="fn">initialize</span>(): <span class="type">Promise</span>&lt;<span class="type">void</span>&gt; {
+    <span class="keyword">const</span> apiKey = Platform.OS === <span class="string">'ios'</span> ? API_KEYS.ios : API_KEYS.android;
+    <span class="keyword">await</span> Purchases.<span class="fn">configure</span>({ apiKey });
+  }
+
+  <span class="keyword">async</span> <span class="fn">login</span>(userId: <span class="type">string</span>): <span class="type">Promise</span>&lt;<span class="type">CustomerInfo</span>&gt; {
+    <span class="keyword">const</span> { customerInfo } = <span class="keyword">await</span> Purchases.<span class="fn">logIn</span>(userId);
+    <span class="keyword">return</span> customerInfo;
+  }
+
+  <span class="keyword">async</span> <span class="fn">isProUser</span>(): <span class="type">Promise</span>&lt;<span class="type">boolean</span>&gt; {
+    <span class="keyword">const</span> info = <span class="keyword">await</span> <span class="keyword">this</span>.<span class="fn">getCustomerInfo</span>();
+    <span class="keyword">return</span> <span class="keyword">typeof</span> info.entitlements.active[<span class="string">'pro'</span>] !== <span class="string">'undefined'</span>;
+  }
+}</pre>
+
+      <h3>Entitlement Model</h3>
+      <p>
+        A single entitlement called <code>pro</code> gates all premium features. The app checks this entitlement on every relevant screen via the <code>SubscriptionContext</code> React context provider.
+      </p>
+
+      <div class="rc-card">
+        <h4>Subscription Flow</h4>
+        <div class="flow">
+          <div class="flow-step">App Launch</div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">RevenueCat Init</div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">Login (User ID)</div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">Check Entitlements</div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">Gate Features</div>
+        </div>
+      </div>
+
+      <div class="rc-card">
+        <h4>Purchase Flow</h4>
+        <div class="flow">
+          <div class="flow-step">Paywall Screen</div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">Fetch Offerings</div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">Select Plan</div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">purchasePackage()</div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">Verify Entitlement</div>
+        </div>
+      </div>
+
+      <h3>Context Provider</h3>
+      <p>
+        The <code>SubscriptionProvider</code> wraps the entire app and exposes subscription state to every screen:
+      </p>
+      <pre><span class="keyword">interface</span> <span class="type">SubscriptionContextType</span> {
+  isProUser: <span class="type">boolean</span>;
+  isTrialing: <span class="type">boolean</span>;
+  trialDaysRemaining: <span class="type">number</span>;
+  offerings: <span class="type">PurchasesOffering</span> | <span class="type">null</span>;
+  <span class="fn">purchasePackage</span>: (pkg: <span class="type">PurchasesPackage</span>) =&gt; <span class="type">Promise</span>&lt;<span class="type">boolean</span>&gt;;
+  <span class="fn">restorePurchases</span>: () =&gt; <span class="type">Promise</span>&lt;<span class="type">boolean</span>&gt;;
+  <span class="fn">startTrial</span>: () =&gt; <span class="type">Promise</span>&lt;<span class="type">boolean</span>&gt;;
+  <span class="fn">refreshStatus</span>: () =&gt; <span class="type">Promise</span>&lt;<span class="type">void</span>&gt;;
+}</pre>
+
+      <h3>Feature Gating</h3>
+      <p>
+        A <code>useFeatureGate</code> hook enforces weekly usage limits for free-tier users and prompts upgrade when limits are reached:
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Free Tier</th>
+            <th>Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Receipt Scans</td>
+            <td><span class="tag tag-free">1 / week</span></td>
+            <td><span class="tag tag-pro">Unlimited</span></td>
+          </tr>
+          <tr>
+            <td>AI Budget Coach Chats</td>
+            <td><span class="tag tag-free">1 / week</span></td>
+            <td><span class="tag tag-pro">Unlimited</span></td>
+          </tr>
+          <tr>
+            <td>AI Investment Coach Chats</td>
+            <td><span class="tag tag-free">1 / week</span></td>
+            <td><span class="tag tag-pro">Unlimited</span></td>
+          </tr>
+          <tr>
+            <td>Insight Reports</td>
+            <td><span class="tag tag-free">1 / week</span></td>
+            <td><span class="tag tag-pro">Unlimited</span></td>
+          </tr>
+          <tr>
+            <td>Community Browsing</td>
+            <td><span class="tag tag-free">Full Access</span></td>
+            <td><span class="tag tag-pro">Full Access</span></td>
+          </tr>
+          <tr>
+            <td>Price Check</td>
+            <td><span class="tag tag-free">Full Access</span></td>
+            <td><span class="tag tag-pro">Full Access</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Offerings & Packages</h3>
+      <p>
+        Two packages are configured in the RevenueCat dashboard and fetched dynamically at runtime:
+      </p>
+      <ul class="purple-list">
+        <li><strong>Monthly</strong> - $4.99/month, billed monthly via App Store / Google Play</li>
+        <li><strong>Annual</strong> - $39.99/year (33% savings), billed annually</li>
+      </ul>
+      <p>
+        Additionally, a <strong>server-side free trial</strong> (7 days) is managed by the backend API, giving full Pro access without requiring payment details upfront.
+      </p>
+
+      <h3>Listener for External Changes</h3>
+      <p>
+        The app registers a <code>CustomerInfoUpdateListener</code> to react to subscription changes that happen outside the app (e.g., renewal, cancellation, or family sharing updates):
+      </p>
+      <pre>Purchases.<span class="fn">addCustomerInfoUpdateListener</span>((info) =&gt; {
+  <span class="keyword">const</span> isPro = <span class="keyword">typeof</span> info.entitlements.active[<span class="string">'pro'</span>] !== <span class="string">'undefined'</span>;
+  <span class="keyword">if</span> (isPro) {
+    <span class="fn">setIsProUser</span>(<span class="keyword">true</span>);
+    <span class="fn">setIsTrialing</span>(<span class="keyword">false</span>);
+  }
+});</pre>
+    </div>
+
+    <!-- AI Architecture -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(245,158,11,0.1);">&#129302;</span>
+        AI Architecture
+      </h2>
+      <p>
+        MumSense uses <strong>OpenAI GPT</strong> (via the Vercel AI SDK and Mastra agent framework) for six distinct AI-powered features. All AI calls are server-side, keeping API keys secure.
+      </p>
+
+      <h3>1. Receipt OCR</h3>
+      <p>
+        Users photograph receipts. The image is sent to the backend, where OpenAI's vision model extracts structured data: store name, item names, quantities, unit prices, totals, and purchase date. A structured output schema ensures consistent JSON responses.
+      </p>
+
+      <h3>2. Smart Insights</h3>
+      <p>
+        After receipt processing, the AI analyses spending patterns across all user receipts to generate personalised insights: product swaps, trend alerts, bulk buy suggestions, and spending comparisons.
+      </p>
+
+      <h3>3. AI Budget Coach</h3>
+      <p>
+        A conversational agent (built with Mastra) that has access to the user's full receipt history. Users can ask natural-language questions like "How do I reduce my grocery bill by 20%?" and receive specific, data-backed recommendations.
+      </p>
+
+      <h3>4. Price Comparison</h3>
+      <p>
+        When a user scans a product in-store, the backend queries existing price records and uses AI to find and rank alternatives across stores, returning the cheapest options.
+      </p>
+
+      <h3>5. Daily Investing Lessons</h3>
+      <p>
+        A CRON job generates fresh investing lessons daily using OpenAI. Lessons are tailored to the user's country, experience level, and learning progress. Topics are scaffolded from basics (what is a stock?) to intermediate (portfolio diversification).
+      </p>
+
+      <h3>6. AI Investment Coach</h3>
+      <p>
+        A conversational agent that understands the user's risk tolerance, goals, country regulations, and practice portfolio. It provides personalised guidance and explains the reasoning behind investment decisions.
+      </p>
+    </div>
+
+    <!-- Database Schema -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(16,185,129,0.1);">&#128451;</span>
+        Database Design
+      </h2>
+      <p>
+        PostgreSQL hosted on <strong>Supabase</strong> with <strong>Prisma 7 ORM</strong> using the <code>@prisma/adapter-pg</code> driver adapter for direct connection pooling.
+      </p>
+
+      <h3>Core Models</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Purpose</th>
+            <th>Key Fields</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>User</strong></td>
+            <td>Authentication and profile</td>
+            <td>name, email, country, city, currency, familySize</td>
+          </tr>
+          <tr>
+            <td><strong>Receipt</strong></td>
+            <td>Scanned receipts</td>
+            <td>storeName, totalAmount, currency, city, province, imageUrl</td>
+          </tr>
+          <tr>
+            <td><strong>ReceiptItem</strong></td>
+            <td>Individual line items</td>
+            <td>name, quantity, unitPrice, totalPrice, category, subcategory</td>
+          </tr>
+          <tr>
+            <td><strong>PriceRecord</strong></td>
+            <td>Aggregated price data</td>
+            <td>normalizedName, storeName, price, currency, country, city</td>
+          </tr>
+          <tr>
+            <td><strong>Insight</strong></td>
+            <td>AI-generated recommendations</td>
+            <td>type (SWAP/TIP/TREND/ALERT), title, savingsAmount, status</td>
+          </tr>
+          <tr>
+            <td><strong>Trolley</strong></td>
+            <td>Community shared shopping lists</td>
+            <td>storeName, totalCost, familySize, tags, items, reviews</td>
+          </tr>
+          <tr>
+            <td><strong>Promotion</strong></td>
+            <td>Community-shared deals</td>
+            <td>productName, discountType, discountValue, storeName, expiresAt</td>
+          </tr>
+          <tr>
+            <td><strong>BulkBuy</strong></td>
+            <td>Group purchasing</td>
+            <td>productName, targetPrice, currentParticipants, targetParticipants</td>
+          </tr>
+          <tr>
+            <td><strong>InvestProfile</strong></td>
+            <td>Investment preferences</td>
+            <td>riskTolerance, experience, goals, portfolio, learningProgress</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Real-Time Features -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(59,130,246,0.1);">&#9889;</span>
+        Real-Time Features
+      </h2>
+      <p>
+        MumSense uses <strong>Socket.IO</strong> (via <code>@nestjs/websockets</code>) for real-time community features:
+      </p>
+      <ul class="blue-list">
+        <li><strong>Country Chat</strong> - real-time messaging between users in the same country, with typing indicators and online presence</li>
+        <li><strong>Bulk Buy Chat</strong> - group chat for each bulk buy, allowing participants to coordinate</li>
+        <li><strong>Live Online Count</strong> - shows how many community members are currently active</li>
+      </ul>
+    </div>
+
+    <!-- Key Files -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(139,92,246,0.1);">&#128193;</span>
+        Key File Structure
+      </h2>
+<pre style="font-size:0.78rem;line-height:1.8;">
+<span class="comment">mobile/</span>
+  src/
+    screens/          <span class="comment"># 30+ screens (Home, Insights, Community, Invest, etc.)</span>
+    components/       <span class="comment"># Reusable UI components and design system</span>
+    contexts/         <span class="comment"># SubscriptionContext, CurrencyContext</span>
+    hooks/            <span class="comment"># useFeatureGate, useChatSocket</span>
+    lib/
+      revenuecat.ts   <span class="comment"># RevenueCat service singleton</span>
+      api.ts          <span class="comment"># Backend API client</span>
+      auth-client.ts  <span class="comment"># Better Auth client</span>
+    constants/        <span class="comment"># Design tokens, categories, filters</span>
+    navigation/       <span class="comment"># Tab navigator, stack navigator</span>
+
+<span class="comment">backend/</span>
+  src/
+    auth/             <span class="comment"># Better Auth module</span>
+    budget/           <span class="comment"># Receipt, insights, price services</span>
+    community/        <span class="comment"># Trolleys, deals, bulk buys, chat</span>
+    invest/           <span class="comment"># Portfolio, lessons, AI coach</span>
+    notifications/    <span class="comment"># Push notification service</span>
+    mastra/           <span class="comment"># AI agent framework (budget + invest agents)</span>
+  prisma/
+    schema.prisma     <span class="comment"># Database schema (20+ models)</span>
+</pre>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    MumSense Technical Documentation<br>
+    Built with React Native, NestJS, PostgreSQL, OpenAI, and <a href="https://www.revenuecat.com">RevenueCat</a>.
+  </div>
+
+</body>
+</html>
