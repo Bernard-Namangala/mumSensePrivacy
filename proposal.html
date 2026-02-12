@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MumSense - Written Proposal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #FAFAFA;
+      color: #1A1A1A;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #6659ED 0%, #F05FB3 100%);
+      color: #fff;
+      padding: 60px 24px 48px;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .header .subtitle {
+      font-size: 1.1rem;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+    .header .badge {
+      display: inline-block;
+      margin-top: 20px;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 24px;
+      padding: 6px 18px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* Container */
+    .container {
+      max-width: 760px;
+      margin: -24px auto 60px;
+      padding: 0 20px;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+      padding: 36px 32px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card h2 .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 14px;
+    }
+    .card p:last-child { margin-bottom: 0; }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0;
+    }
+    .card ul li {
+      font-size: 0.95rem;
+      color: #444;
+      padding: 8px 0 8px 28px;
+      position: relative;
+      border-bottom: 1px solid #F0F0F0;
+    }
+    .card ul li:last-child { border-bottom: none; }
+    .card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 15px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #6659ED;
+    }
+
+    .card strong { color: #1A1A1A; font-weight: 600; }
+
+    /* Stat row */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0 4px;
+    }
+    .stat-box {
+      background: #F7F6FE;
+      border-radius: 12px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+    .stat-box .num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #6659ED;
+    }
+    .stat-box .label {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* Pricing table */
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0 4px;
+    }
+    .price-card {
+      border: 1.5px solid #E8E8E8;
+      border-radius: 12px;
+      padding: 20px 12px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .price-card.featured {
+      border-color: #6659ED;
+      background: #F7F6FE;
+    }
+    .price-card .tier {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #999;
+      margin-bottom: 8px;
+    }
+    .price-card.featured .tier { color: #6659ED; }
+    .price-card .amount {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1A1A1A;
+    }
+    .price-card .period {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 2px;
+    }
+    .price-card .detail {
+      font-size: 0.78rem;
+      color: #666;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    /* Feature grid */
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0 4px;
+    }
+    .feature-item {
+      background: #F9F9F9;
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .feature-item .feat-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      margin-bottom: 4px;
+    }
+    .feature-item .feat-desc {
+      font-size: 0.8rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      font-size: 0.8rem;
+      color: #999;
+    }
+    .footer a { color: #6659ED; text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.8rem; }
+      .card { padding: 24px 20px; }
+      .stats, .pricing, .features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>MumSense</h1>
+    <div class="subtitle">Financial Confidence for Busy Mums</div>
+    <div class="badge">Written Proposal</div>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+
+    <!-- The Problem -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(239,68,68,0.1);">&#128680;</span>
+        The Problem
+      </h2>
+      <p>
+        Grocery prices are rising globally, but household budgets aren't keeping up. The average family overspends by <strong>15% or more</strong> on their weekly shop, not because they're careless, but because they simply don't have time to compare prices, track spending patterns, or research cheaper alternatives.
+      </p>
+      <p>
+        For busy mums, this problem compounds. They're the primary household shoppers, yet they have the least amount of spare time to optimise their spending. And when it comes to building long-term financial security, most investing apps feel intimidating, jargon-heavy, and designed for people who already have money.
+      </p>
+      <p>
+        The result: families leak money on groceries every week, savings stay flat, and financial confidence remains out of reach.
+      </p>
+      <div class="stats">
+        <div class="stat-box">
+          <div class="num">15%</div>
+          <div class="label">Average overspend on groceries</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">78%</div>
+          <div class="label">Of mums manage household finances</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">63%</div>
+          <div class="label">Feel anxious about money</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Target Audience -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(240,95,179,0.1);">&#128105;&#8205;&#128103;&#8205;&#128102;</span>
+        Target Audience
+      </h2>
+      <p>
+        MumSense is built for <strong>Rebecca Louise's audience</strong>: busy mums aged 25-45 who want practical, fast, and actionable financial guidance, not theory. They are:
+      </p>
+      <ul>
+        <li><strong>Time-poor</strong> - juggling work, kids, and household responsibilities with minutes, not hours, to spare</li>
+        <li><strong>Budget-conscious</strong> - actively looking for ways to reduce everyday costs like groceries, home essentials, and utilities</li>
+        <li><strong>Financially curious but underserved</strong> - interested in saving and investing but put off by apps that assume prior knowledge or disposable income</li>
+        <li><strong>Community-driven</strong> - trust peer recommendations from other mums over generic advertising</li>
+      </ul>
+      <p>
+        MumSense meets them where they already are: in the supermarket aisle, at the kitchen table reviewing receipts, or during a 10-minute coffee break.
+      </p>
+    </div>
+
+    <!-- The Solution -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(102,89,237,0.1);">&#128161;</span>
+        The Solution
+      </h2>
+      <p>
+        MumSense is a mobile app that helps busy mums <strong>save money on everyday shopping</strong> and <strong>learn to grow what they save</strong>, powered by AI that gets smarter with every receipt scanned.
+      </p>
+      <div class="features">
+        <div class="feature-item">
+          <div class="feat-title">In-Store Price Check</div>
+          <div class="feat-desc">Scan or type any product while shopping. See cheaper options at nearby stores instantly.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feat-title">AI Receipt Scanning</div>
+          <div class="feat-desc">Snap a photo of any receipt. AI extracts every item, store, and total automatically.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feat-title">Smart Insights</div>
+          <div class="feat-desc">Spending breakdowns by category and store, with personalised "Swap & Save" suggestions.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feat-title">AI Budget Coach</div>
+          <div class="feat-desc">Conversational AI that analyses your receipts and builds custom savings plans.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feat-title">Community Hub</div>
+          <div class="feat-desc">Browse trolleys, discover local deals, and join bulk buys shared by other mums.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feat-title">Learn to Invest</div>
+          <div class="feat-desc">AI-generated daily lessons, a practice portfolio, and a personal investment coach.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monetisation Strategy -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(16,185,129,0.1);">&#128176;</span>
+        Monetisation Strategy
+      </h2>
+      <p>
+        MumSense uses a <strong>freemium subscription model</strong> powered by <strong>RevenueCat</strong>, designed to let users experience the core value before committing.
+      </p>
+
+      <div class="pricing">
+        <div class="price-card">
+          <div class="tier">Free</div>
+          <div class="amount">$0</div>
+          <div class="period">forever</div>
+          <div class="detail">1 receipt scan/week, 1 AI chat/week, community browsing, limited insights</div>
+        </div>
+        <div class="price-card featured">
+          <div class="tier">Pro Monthly</div>
+          <div class="amount">$4.99</div>
+          <div class="period">/month</div>
+          <div class="detail">Unlimited scans, unlimited AI chats, full insights, investing features</div>
+        </div>
+        <div class="price-card">
+          <div class="tier">Pro Annual</div>
+          <div class="amount">$39.99</div>
+          <div class="period">/year (save 33%)</div>
+          <div class="detail">Everything in Pro Monthly at a discounted annual rate</div>
+        </div>
+      </div>
+
+      <p style="margin-top: 20px;">
+        <strong>Why this works:</strong> The free tier gives users enough value to build a habit (one scan per week, community access). The moment they want to scan a second receipt or ask the AI coach another question, the upgrade prompt feels natural, not forced. At less than the cost of a coffee per week, Pro is an easy decision for someone already saving multiples of that amount.
+      </p>
+      <p>
+        <strong>Growth levers:</strong>
+      </p>
+      <ul>
+        <li><strong>Community network effect</strong> - shared trolleys, deals, and bulk buys make the app more valuable as more mums join</li>
+        <li><strong>Receipt-driven lock-in</strong> - the more receipts scanned, the smarter insights become, increasing switching cost</li>
+        <li><strong>Organic sharing</strong> - trolleys and deals are inherently shareable, driving word-of-mouth acquisition</li>
+        <li><strong>Investing upsell</strong> - the Grow module targets users who've already saved money and want to do more with it</li>
+      </ul>
+    </div>
+
+    <!-- Why MumSense Wins -->
+    <div class="card">
+      <h2>
+        <span class="icon" style="background: rgba(245,158,11,0.1);">&#127942;</span>
+        Why MumSense Wins
+      </h2>
+      <p>
+        Most budgeting apps track where money went. MumSense tells you <strong>where money is going next</strong> and how to keep more of it. The combination of real-time price checking, AI-powered receipt analysis, community-driven savings, and accessible investing education in a single app is unique in the market.
+      </p>
+      <p>
+        Every feature is designed around one question: <em>"Can a busy mum use this in under 60 seconds?"</em> If the answer is no, we simplify it until it is.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    MumSense &mdash; Save Smarter. Spend Wiser. Grow Together.<br>
+    Built for the <a href="#">Rebecca Louise - Financial Confidence for Busy Mums</a> hackathon.
+  </div>
+
+</body>
+</html>
